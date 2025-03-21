@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1002620237242",
+    "project_id": "unanimaux",
+    "storage_bucket": "unanimaux.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002620237242:android:9aaed11ce765d4a5c0d983",
+        "android_client_info": {
+          "package_name": "fr.unanimaux.unanimaux"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDq1Q7aPXxbH14aQ2jMwbCIrenEUI5las"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
