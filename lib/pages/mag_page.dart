@@ -16,28 +16,25 @@ class _MagPageState extends State<MagPage> {
 
   bool isAdmin = false; // Par défaut l'utilisateur n'est pas un admin
   bool isSubscriber = false; // Par défaut l'utilisateur n'est pas un abonné
-  bool isLiked = false; // Par défaut chaque article n'est pas liké
   final currentUser = FirebaseAuth.instance.currentUser!; // Identifie le user pour savoir s'il a liké
 
-//  @override
-//  void initState() {
-//    super.initState();
-//    _checkUserRole();
-//    isLiked = widget.likes.containe(currentUser.email);
-//  }
+  @override
+  void initState() {
+    super.initState();
+    _checkUserRole();
+  }
 
-  // Vérifie les rôles de l'utilisateur
-//  Future<void> _checkUserRole() async {
-//    bool adminStatus = await AdminTools.isUserAdmin();
-//    bool subscriberStatus = await AdminTools.isUserSubscriber();
-//    setState(() {
-//      isAdmin = adminStatus;
-//      isSubscriber = subscriberStatus;
-//    });
-//  }
+// Vérifie les rôles de l'utilisateur
+  Future<void> _checkUserRole() async {
+    bool adminStatus = await AdminTools.isUserAdmin();
+    bool subscriberStatus = await AdminTools.isUserSubscriber();
+    setState(() {
+      isAdmin = adminStatus;
+      isSubscriber = subscriberStatus;
+    });
+  }
 
   @override
-
   Widget build(BuildContext context) {
     return Stack( // Stack permet de superposer le bouton d'ajout de magazines et la liste de magazines
       children: [
@@ -54,7 +51,11 @@ class _MagPageState extends State<MagPage> {
               }
 
               List<Map<String, dynamic>> mag = snapshot.data!.docs.map( // Créé la liste des magazines à partir du snapshot
-                    (doc) => doc.data() as Map<String, dynamic>,
+                    (doc) =>
+                    {
+                      ...doc.data() as Map<String, dynamic>,
+                      "id": doc.id // ajoute l'id du magazine (pour savoir le repérer et s'il est liké ou non
+                    },
               ).toList();
 
               return ListView.builder(
