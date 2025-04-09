@@ -16,8 +16,6 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized(); //Vérifie que toutes les dépendances (surtout firebase) sont initialisées avant de lancer la suite du code
 
-  await initializeDateFormatting('fr_FR', null); // Initialise le format de dates françaises
-
   await Firebase.initializeApp( //Détermine sur quelle plateforme/OS est lancée l'app (pour la BDD firebase
     options: DefaultFirebaseOptions.currentPlatform,
   );

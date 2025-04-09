@@ -30,27 +30,14 @@ class _LoginPageState extends State<LoginPage> {
 
       // Accès à Firestore pour récupérer le rôle de l'utilisateur
       DocumentSnapshot userDoc = await _firestore.collection('users').doc(uid).get();
-
-      if (userDoc.exists) {
-        String role = userDoc['role']; // Récupération du rôle
-
-        if (role == "admin") {
-          print("L'utilisateur est un administrateur");
-          // Ici, tu peux rediriger vers une page admin ou activer certaines fonctionnalités
-        }
-        else if (role == "subscriber") {
-          print("L'utilisateur est un abonné");
-        }
-        else {
-          print("L'utilisateur est un simple utilisateur");
-        }
-      }
-      else {
-        print("Erreur : L'utilisateur n'a pas de rôle défini.");
-      }
     }
-    catch (e) {
-      print("Erreur de connexion : $e");
+    on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Erreur : ${e.message}"),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -67,8 +54,13 @@ class _LoginPageState extends State<LoginPage> {
         'role': 'user', // Par défaut, tous les nouveaux utilisateurs sont des users
       });
     }
-    catch (e) { // Si erreur dans la création de l'utilisateur, print une erreur
-      print("Erreur d'inscription : $e");
+    on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Erreur : ${e.message}"),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
@@ -96,7 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20), // Ajoute un espace de 20 pixels
                 ElevatedButton(
                   onPressed: () { // Sur clic sur le bouton
-                    if (emailController.text.isNotEmpty && passwordController.text.length > 6) { // Si le champ email n'est pas vide et que le password fait plus de 6 char
+                    if (emailController.text.isNotEmpty) { // Si le champ email n'est pas vide
                       login(); // Appelle la fonction permettant de se login
                     }
                   },
@@ -114,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 ElevatedButton(
                   onPressed: () { // Sur clic sur le bouton
-                    if (emailController.text.isNotEmpty && passwordController.text.length > 6) { // Si le champ email n'est pas vide et que le password fait plus de 6 char
+                    if (emailController.text.isNotEmpty) { // Si le champ email n'est pas vide
                       register(); // Appelle la fonction permettant de créer un compte
                     }
                   },

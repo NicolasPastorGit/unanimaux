@@ -25,7 +25,8 @@ class MagazineItems extends StatelessWidget {
     final String mois = DateFormat.yMMMM('fr_FR').format(timestampmensuel.toDate()).toUpperCase();
     final resume = mag["resume"];
     final String pdfPath = mag["pdf"]; // Chemin du PDF dans Firestore
-    final likes = List<String>.from(mag["likes"]);
+    final magazineId = mag["id"];
+    final likeNumber = mag["likes"].length;
 
     return Stack(
       children: [
@@ -58,7 +59,7 @@ class MagazineItems extends StatelessWidget {
               ),
             ),
             subtitle: Text(
-              "$resume J'aimes : $likes",
+              "$resume",
               style: const TextStyle(
                   color: Colors.white,
                   fontFamily: 'Poppins'
@@ -85,11 +86,8 @@ class MagazineItems extends StatelessWidget {
         ),
         Positioned( // Positionne en bas à droite les likes
             bottom: 0,
-            right: 20,
-            child: LikeButton(
-                isLiked: true,
-                onTap: () {}
-            )
+            right: 30,
+            child: LikeButton(magazineId: magazineId, likeNumber: likeNumber)
         ),
       ],
     );
