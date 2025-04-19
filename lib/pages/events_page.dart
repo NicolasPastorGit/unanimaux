@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:unanimaux/tool_lib.dart';
+import 'package:unanimaux/components/open_link_button.dart';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
@@ -100,6 +101,7 @@ class _EventsPageState extends State<EventsPage> {
                       final image = event["image"];
                       final resume = event["resume"];
                       final lieu = event["lieu"];
+                      final link = event["link"];
 
                       return Container(
                         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Espacement entre les items
@@ -142,7 +144,7 @@ class _EventsPageState extends State<EventsPage> {
                           trailing: Icon(Icons.expand_more, color: Colors.white),
                           children: <Widget>[
                             Container(
-                                color: couleurPrincipale,
+                                color: Color(0xFFFFB35B),
                                 child: ListTile(
                                     title:
                                     Row(children: [
@@ -193,6 +195,7 @@ class _EventsPageState extends State<EventsPage> {
                                             Text("Lieu : "),
                                             Text("$lieu", style: TextStyle(fontFamily: "Anton")),
                                           ]),
+                                          OpenLinkButton(textButton: "En savoir plus", url: link)
                                         ],
                                       ),
                                     )
@@ -233,6 +236,7 @@ class _EventsPageState extends State<EventsPage> {
         TextEditingController imageController = TextEditingController(text: 'logo');
         TextEditingController lieuController = TextEditingController();
         TextEditingController resumeController = TextEditingController();
+        TextEditingController linkController = TextEditingController();
 
         // Variables locales pour la date
         DateTime? dialogSelectedDate = selectedDate;
@@ -291,6 +295,17 @@ class _EventsPageState extends State<EventsPage> {
                       ),
                       cursorColor: Colors.grey,
                     ),
+                    TextField(
+                      controller: linkController,
+                      decoration: InputDecoration(
+                          labelText: "Lien d'information",
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: couleurPrincipale)
+                          ),
+                          labelStyle: TextStyle(color: Colors.grey)
+                      ),
+                      cursorColor: Colors.grey,
+                    ),
                   ],
                 ),
                 actions: [
@@ -312,6 +327,7 @@ class _EventsPageState extends State<EventsPage> {
                         imageController.text,
                         lieuController.text,
                         resumeController.text,
+                        linkController.text,
                         dialogSelectedDate!,
                       );
                       Navigator.pop(context);

@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'firebase_options.dart';
 import 'package:unanimaux/tool_lib.dart';
+import 'package:unanimaux/api/firebase_api.dart';
 
 void main() async {
   await initializeDateFormatting('fr_FR', null); // Initialise le format de dates françaises
@@ -19,6 +20,8 @@ void main() async {
   await Firebase.initializeApp( //Détermine sur quelle plateforme/OS est lancée l'app (pour la BDD firebase
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await FirebaseApi().initNotifications();
 
   await FirebaseAppCheck.instance.activate( // Défini l'appCheck de Firebase pour sécuriser le dialogue API
     androidProvider: AndroidProvider.playIntegrity,

@@ -32,12 +32,13 @@ class AdminTools {
   }
 
   // Ajoute un événement au firestore
-  static Future<void> addEvent(String image, String lieu, String resume, DateTime selectedDate) async {
+  static Future<void> addEvent(String image, String lieu, String resume, String link, DateTime selectedDate) async {
     try {
       await FirebaseFirestore.instance.collection("Events").add({
         "lieu": lieu,
         "resume": resume,
         "image": image,
+        "link": link,
         "date": selectedDate
       });
     } catch (e) {

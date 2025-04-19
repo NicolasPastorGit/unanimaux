@@ -12,15 +12,11 @@ class OpenLinkButton extends StatelessWidget {
   // Fonction pour ouvrir l'url
   Future<void> _launchURL() async {
     final Uri uri = Uri.parse(url); // Modifie l'url pour la rendre utilisable
-
-    //if (!await launchUrl(uri, mode: LaunchMode.inAppWebView)) {
-    //  debugPrint("Impossible d'ouvrir le lien : $url");
-    //}
-    if (await canLaunchUrl(uri)) { // Vérifie que l'url est utilisable
-      await launchUrl(uri, mode: LaunchMode.externalApplication); // Ouvre l'url
-    } else {
-      throw "Impossible d'ouvrir le lien $url";
-      }
+    try {
+      await launchUrl(uri, mode: LaunchMode.externalApplication); // Ouvre le lien via une application externe
+    } catch (e) {
+      debugPrint("Impossible d'ouvrir le lien $url : $e");
+    }
   }
 
   @override
